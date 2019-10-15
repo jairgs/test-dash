@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: test-dash
+  name: dash
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: test-dash
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: test-dash
+    spec:
+      containers:
+      - image: registry.hub.docker.com/jairgs/test-dash:v1
+        name: test-dash
+        ports:
+        - containerPort: 8050
