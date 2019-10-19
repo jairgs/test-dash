@@ -53,6 +53,8 @@ For this example we are using the free K8s instance of IBM Cloud which is free a
 #### IBM Cloud single instance K8.
 _You will need to authenticate to the ibmcloud (ibmcloud login --sso) and link the kubectl aplication to the ibmcloud kubernetes service (ibmcloud ks)._
 
+```ibmcloud ks cluster config --cluster <cluster_name_or_ID>``` to link your cloud cluster to your kubectl client. 
+
 The deployment is a high level concept that manages ReplicaSets and provides declarative updates to Pods along with other processes; the Deployment is the main concept used in kubernetes to deploy apps. 
 
 >Running multiple replicas of a pod will not guarantee high availability but it cannot be achieved without it. For obvious reasons, you should never have all the replicas of a pod on the same node.
