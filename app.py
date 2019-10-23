@@ -115,22 +115,6 @@ fig2.update_layout(
 
 
 #x=pd.DataFrame({'col':np.random.normal(size=1000)})
-'''app.layout = html.Div(children=[
-    html.H1(children='Visualización del Crecimiento Trimestral', style={'textAlign':'center'}),
-
-    html.Div(children='Esta app actualiza en tiempo real los últimos datos del PIB publicados por INEGI', style={'textAlign':'center'}),
-    
-    html.Div([
-        html.Div([
-            dcc.Graph(id='whatever', figure=fig2)
-            ], className='eight columns'), 
-        html.Div([
-            dcc.Graph(id='whatever2', figure=histo()), 
-            html.Div(children='Último trimestre ('+df['TIME_PERIOD'].iloc[-1]+'): Percentil '+str(int(round(percentileofscore(df['gwt'].dropna(), df['gwt'].dropna().iloc[-1]), 0))), style={'textAlign':'center', 'backgroundColor':'GhostWhite'}, className='button')
-            ], className='four columns') 
-    ], className='row')
-])
-'''
 navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink(html.Img(src='assets/GitHub-Mark-32px.png'), 
