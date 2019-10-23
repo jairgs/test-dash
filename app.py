@@ -9,18 +9,27 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.figure_factory as ff
 from scipy.stats import percentileofscore
+import dash_bootstrap_components as dbc
 
 
 df_main=getdata('493911')
 df=df_main.copy()
 df=df.sort_values('TIME_PERIOD', ascending=True)
-df['party']=['pri']*8*4+['pan']*4*12+['pri']*4*6+['morena']*2
+party=['pri']*8*4+['pan']*4*12+['pri']*4*6
+party+=['morena']*(df.shape[0]-len(party))
+df['party']=party
+
+
+colors=['crimson']*8*4+['darkblue']*4*12+['crimson']*4*6
+colors+=['maroon']*(df.shape[0]-len(colors))
+
+
 
 df['OBS_VALUE']=df['OBS_VALUE'].astype('float')
 df['gwt']=df['OBS_VALUE'].pct_change()
 
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+external_stylesheets = ['assets/css/bootstrap.css']#['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
@@ -91,20 +100,22 @@ def histo():
     fig = ff.create_distplot([gwt*100], ['Crecimiento Trimestral'],
         show_hist=True, show_rug=False, show_curve=True, bin_size=.5)
     fig.add_trace(go.Scatter(x=[gwt.iloc[-1], gwt.iloc[-1]], y=[0,.6], name='Último Trimestre', mode='lines', line={'dash':'dash', 'color':'crimson'}))
-    fig.update_layout(title='Distribución del Crecimiento Trimestral', legend_orientation="h")
+    fig.update_layout(title='Distribución del Crecimiento Trimestral', legend_orientation="h", margin={'l': 0, 'r': 0, 't': 50, 'b': 50})
     return fig
 histo()
 
 #fig2=px.bar(df, x='TIME_PERIOD', y='gwt', color='party', category_orders=df['TIME_PERIOD'])
-colors=['crimson']*8*4+['darkblue']*4*12+['crimson']*4*6+['maroon']*2
 fig2=go.Figure()
 fig2.add_trace(
     go.Bar(x=df['TIME_PERIOD'], y=df['gwt'], marker_color=colors))
-fig2.update_layout(title='Crecimiento Trimestral del PIB Desestacionalizado a Precios Constantes')
+fig2.update_layout(
+    margin={'l': 0, 'r': 0, 't': 50, 'b': 50}, 
+    title='Crecimiento Trimestral del PIB'
+)
 
 
 #x=pd.DataFrame({'col':np.random.normal(size=1000)})
-app.layout = html.Div(children=[
+'''app.layout = html.Div(children=[
     html.H1(children='Visualización del Crecimiento Trimestral', style={'textAlign':'center'}),
 
     html.Div(children='Esta app actualiza en tiempo real los últimos datos del PIB publicados por INEGI', style={'textAlign':'center'}),
@@ -119,7 +130,57 @@ app.layout = html.Div(children=[
             ], className='four columns') 
     ], className='row')
 ])
+'''
+navbar = dbc.NavbarSimple(
+    children=[
+        dbc.NavItem(dbc.NavLink(html.Img(src='assets/GitHub-Mark-32px.png'), 
+        href="http://github.com/jairgs/test-dash"))
+    ],
+    brand="PIB Dashboard",
+    brand_href="#",
+    sticky="top",
+    color="primary",
+    dark=True
+)
+
+body = dbc.Container(
+    [
+        dbc.Row(
+            [
+                dbc.Col(
+                    [
+                        html.H2("Descripción"),
+                        html.P(
+                            """\
+                        Esta app actualiza en tiempo real los últimos datos del PIB publicados por INEGI. 
+                        """
+                        ), 
+                        html.P("Se utiliza el PIB desestacionalizado a precios de 2003.")
+                    ],
+                    md=3,
+                ),
+                dbc.Col(
+                    [
+                        html.H2("Crecimiento"),
+                        dcc.Graph(
+                            figure=fig2
+                        ),
+                    ]
+                ),
+                dbc.Col(
+                    [
+                    html.H2("Distribución"),
+                    dcc.Graph(figure=histo()), 
+                    html.P('Último trimestre ('+df['TIME_PERIOD'].iloc[-1]+'): Percentil '+str(int(round(percentileofscore(df['gwt'].dropna(), df['gwt'].dropna().iloc[-1]), 0))), style={'textAlign':'center', 'backgroundColor':'GhostWhite'}, className='button')
+                    ], md=3)
+            ]
+        )
+    ],
+    className="mt-4",
+)
+
+app.layout = html.Div([navbar, body])
 
 
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0', port='8050', debug=False)
+    app.run_server(host='0.0.0.0', port='8050', debug=True)
