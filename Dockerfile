@@ -1,7 +1,8 @@
 FROM python:latest
-COPY app.py /
-COPY requirements.txt /
-COPY apirequest.py /
-RUN pip install -r requirements.txt
+COPY app.py app/
+COPY requirements.txt app/
+COPY apirequest.py app/
+COPY assets app/assets/
+RUN pip install -r app/requirements.txt
 EXPOSE 8050
-CMD [ "python", "./app.py" ]
+CMD python app/app.py

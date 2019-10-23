@@ -82,7 +82,7 @@ IBM cloud uses a specific public ip for each worker and assigns a random port fo
 To figure out the port of the service we need to ```kubectl describe service test-dash-service``` and it is listed at NodePort.
 To figure out the public ip of the worker we need to type ```ibmcloud ks cluster ls``` to list the clusters running in our workspace, copy the id of our cluster and type ```ibmcloud ks worker ls --cluster <clusterid>``` which will list the public ip of our only worker. 
 
-[You can visit the app here.](http://184.172.250.9:31894/) 
+[You can visit the app here.](http://184.172.250.9:30084/) 
 
 
 
