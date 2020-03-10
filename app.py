@@ -11,8 +11,10 @@ import plotly.figure_factory as ff
 from scipy.stats import percentileofscore
 import dash_bootstrap_components as dbc
 
+with open('Token') as file:
+    Token=str(file.read())
 
-df_main=getdata('493911')
+df_main=getdata('493911', Token=Token)
 df=df_main.copy()
 df=df.sort_values('TIME_PERIOD', ascending=True)
 party=['pri']*8*4+['pan']*4*12+['pri']*4*6
@@ -167,4 +169,5 @@ app.layout = html.Div([navbar, body])
 
 
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0', port='8050', debug=False)
+    port = int(os.environ.get("PORT", 5000))
+    app.run_server(host='0.0.0.0', port=port, debug=False)

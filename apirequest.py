@@ -1,6 +1,7 @@
 import requests
 import json
 import pandas as pd
+import os
 
 
 #consulta para hacer requests a la base de indicadores económicos
@@ -10,10 +11,11 @@ AreaGeo='0700'
 Recientes='false' #true= ultimo valor; false= serie completa
 FuenteDatos='BIE' #BISE or BIE 
 Version='2.0'
-Token='5a9fe7dc-cc4a-77eb-e5cf-f2153a7c41bc'
+with open('Token') as file:
+    Token=str(file.read())
 Formato='json'
 
-def getdata(IdIndicador, Idioma='es', AreaGeo='0700', Recientes='false', FuenteDatos='BIE', Version='2.0', Token='5a9fe7dc-cc4a-77eb-e5cf-f2153a7c41bc', Formato='json'):
+def getdata(IdIndicador, Idioma='es', AreaGeo='0700', Recientes='false', FuenteDatos='BIE', Version='2.0', Token=Token, Formato='json'):
     url='https://www.inegi.org.mx/app/api/indicadores/desarrolladores/jsonxml/INDICATOR/'+IdIndicador+'/'+Idioma+'/'+AreaGeo+'/'+Recientes+'/'+FuenteDatos+'/'+Version+'/'+Token+'?type='+Formato
     response= requests.get(url)
     if response.status_code==200:
@@ -40,17 +42,9 @@ def getdata(IdIndicador, Idioma='es', AreaGeo='0700', Recientes='false', FuenteD
 
     else: print('bad request:'+response)
 
-'''
-#consulta para denue
-token='229b1e5e-0636-4a1d-b78c-58f51731820c'
-url='https://www.inegi.org.mx/app/api/denue/v1/consulta/BuscarAreaActEstr/01/0/0/0/0/0/0/0/0/oxxo/1/15/0/1/'+token
-response= requests.get(url)
-if response.status_code==200:
-    content= json.loads(response.content)
-    for i in content:
-        print(i['Nombre'])
-'''
-    
-#print(getdata(IdIndicador))   
+if __name__=='__main__':
+    print(getdata(IdIndicador))
+
+
 
     
