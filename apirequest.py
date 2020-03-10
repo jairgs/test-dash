@@ -11,8 +11,7 @@ AreaGeo='0700'
 Recientes='false' #true= ultimo valor; false= serie completa
 FuenteDatos='BIE' #BISE or BIE 
 Version='2.0'
-with open('Token') as file:
-    Token=str(file.read())
+Token='5a9fe7dc-cc4a-77eb-e5cf-f2153a7c41bc'
 Formato='json'
 
 def getdata(IdIndicador, Idioma='es', AreaGeo='0700', Recientes='false', FuenteDatos='BIE', Version='2.0', Token=Token, Formato='json'):

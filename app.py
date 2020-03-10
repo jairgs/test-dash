@@ -12,8 +12,7 @@ from scipy.stats import percentileofscore
 import dash_bootstrap_components as dbc
 import os
 
-with open('Token') as file:
-    Token=str(file.read())
+Token='5a9fe7dc-cc4a-77eb-e5cf-f2153a7c41bc'
 
 df_main=getdata('493911', Token=Token)
 df=df_main.copy()
