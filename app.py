@@ -10,6 +10,7 @@ from plotly.subplots import make_subplots
 import plotly.figure_factory as ff
 from scipy.stats import percentileofscore
 import dash_bootstrap_components as dbc
+import os
 
 with open('Token') as file:
     Token=str(file.read())
