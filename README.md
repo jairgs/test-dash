@@ -9,7 +9,7 @@ The app is going to be using the dash framework for dynamic dashboards which use
 
 It uses [INEGI](https://www.inegi.org.mx/) api for querying official public figures. 
 
-The app is deployed [here](https://mexico-pib.herokuapp.com)
+The app is deployed at https://mexico-pib.herokuapp.com
 
 ### How to run the app
 In python3:  

@@ -121,7 +121,7 @@ fig2.update_layout(
 navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink(html.Img(src='assets/GitHub-Mark-32px.png'), 
-        href="http://github.com/jairgs/test-dash"))
+        href="http://github.com/jairgs/pibdash"))
     ],
     brand="PIB Dashboard",
     brand_href="#",
